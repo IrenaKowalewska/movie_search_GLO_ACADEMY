@@ -38,6 +38,7 @@ function apiSearch(event) {
                 <div class="col-12 col-md-4 col-xl-3 item">
                     <img src='${poster}' alt='${nameItem}' class='poster' ${dataInfo}>
                     <h5>${nameItem}</h5>
+                    <p "text-center">Рейтинг: ${item.vote_average}</p>
                 </div>
 
             `;
@@ -81,7 +82,7 @@ function showFullInfo() {
             return value.json();
         })
         .then(function(output) {
-            console.log(output);
+            // console.log(output);
             movie.innerHTML = `
             <h4 class="col-12 text-center text-info">${output.name || output.title}</h4>
             <div class="col-3">
@@ -132,6 +133,7 @@ document.addEventListener('DOMContentLoaded', function(){
             <div class="col-12 col-md-4 col-xl-3 item">
                 <img src='${poster}' alt='${nameItem}' class='poster' ${dataInfo}>
                 <h5>${nameItem}</h5>
+                <p "text-center">Рейтинг: ${item.vote_average}</p>
             </div>
 
         `;
