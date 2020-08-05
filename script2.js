@@ -7,7 +7,7 @@ function apiSearch(event) {
 
     const searchText = document.querySelector('.form-control').value;
     const server = 'https://api.themoviedb.org/3/search/multi?api_key=7c2ee62875ea6fb1aea5a9512a985137&language=ru&query=' + searchText;
-    movie.innerHTML = 'ЗАГРУЗКА...';
+    movie.innerHTML = `<div class="spinner"></div>`;
 
     fetch(server)
         .then(function(value) {
@@ -22,7 +22,7 @@ function apiSearch(event) {
             output.results.forEach(function(item) {
             let nameItem = item.name || item.title;
             inner += `
-                <div class="col-3 item">
+                <div class="col-12 col-md-4 col-xl-3 item">
                     <img src='${urlPoster + item.poster_path}' alt='${nameItem}'>
                     <h5>${nameItem}</h5>
                 </div>
