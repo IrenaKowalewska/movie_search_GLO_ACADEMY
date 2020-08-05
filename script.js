@@ -44,23 +44,6 @@ function requestApi(url) {
         });
         request.send();
     });
-    
+
 }   
     
-
-//     request.addEventListener('readystatechange', () => {
-//         if (request.readyState !== 4) {
-//            
-//             return;
-//         } 
-//         if (request.status !== 200) {
-            
-//            
-//             return;
-//         }
-        
-        
-//     });
-// }
-
-// 7c2ee62875ea6fb1aea5a9512a985137 
