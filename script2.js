@@ -67,6 +67,8 @@ function showFullInfo() {
     // dataset находит  data-атрибуты ( в моем случае[data-type])
     // console.log(this.dataset.type); 
     let url = '';
+    let thisType = this.dataset.type;
+    let thisId = this.dataset.id;
     if (this.dataset.type === 'movie') {
         url = `https://api.themoviedb.org/3/movie/${this.dataset.id}?api_key=7c2ee62875ea6fb1aea5a9512a985137&language=ru`;
     }else if (this.dataset.type === 'tv') {
@@ -74,6 +76,7 @@ function showFullInfo() {
     } else {
         movie.innerHTML = `<h2 class="col-12 text-center text-info">ПРОИЗОШЛА ОШИБКАБ ПОВТОРИТЕ ПОЗЖЕ</h2>`;
     }
+
     fetch(url)
         .then(function(value) {
             if (value.status !== 200) {
@@ -98,15 +101,36 @@ function showFullInfo() {
 
                 ${(output.last_episode_to_air) ? `<p>В ${output.number_of_seasons} сезоне ${output.last_episode_to_air.episode_number} серий вышло</p>` : ''}
             <p text-center>Описание: ${output.overview}</p>
+            <br>
+            <div class='youtube'></div>
             </div>
-            `
+            `;
           
+            getVideo(thisType, thisId);
         })
         .catch(function(reason) {
             movie.innerHTML = 'УПС... что-то пошло не так...';
             console.error("error: " + reason.status);
         });
     
+}
+
+function getVideo(type, id) {
+    let youtube = movie.querySelector('.youtube');
+    fetch(`https://api.themoviedb.org/3/${type}/${id}/videos?api_key=7c2ee62875ea6fb1aea5a9512a985137&language=ru`)
+        .then((value) => {
+            if (value.status !== 200) {
+                return Promise.reject(value);
+            }
+            return value.json();
+        })
+        .then((output) => {
+            youtube.innerHTML = 'yes';
+        })
+        .catch((reason) => {
+            youtube.innerHTML = 'ПО ВАШЕМУ ЗАПРОСУ ВИДЕО НЕ НАЙДЕНО';
+            console.error("error: " + reason.status);
+        });
 }
 
 document.addEventListener('DOMContentLoaded', function(){
@@ -146,3 +170,4 @@ document.addEventListener('DOMContentLoaded', function(){
         console.error("error: " + reason.status);
     });
 });
+
