@@ -125,6 +125,9 @@ function getVideo(type, id) {
             return value.json();
         })
         .then((output) => {
+            output.results.forEach((item) => {
+                
+            });
             youtube.innerHTML = 'yes';
         })
         .catch((reason) => {
