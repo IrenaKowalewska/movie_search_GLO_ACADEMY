@@ -86,10 +86,11 @@ function showFullInfo() {
         })
         .then(function(output) {
             // console.log(output);
+            const poster = output.poster_path ? urlPoster + output.poster_path : './img/no-poster.jpg';
             movie.innerHTML = `
             <h4 class="col-12 text-center text-info">${output.name || output.title}</h4>
             <div class="col-3">
-                <img src="${urlPoster + output.poster_path}" alt="${output.name || output.title}">
+                <img src="${poster}" alt="${output.name || output.title}">
                 ${(output.homepage) ? `<p class="text-center"><a href="${output.homepage}" target ="_blank">Официальная страница</a></p>` : ''}
                 ${(output.imdb_id) ? `<p class="text-center"><a href="https://imdb.com/title/${output.imdb_id}" target ="_blank">Страница на IMDB.com</a></p>` : ''}
                 
@@ -125,10 +126,15 @@ function getVideo(type, id) {
             return value.json();
         })
         .then((output) => {
+            let videoFrame = `<h5 class="text-info ">ТРЕЙЛЕРЫ</h5>`;
+
+            if (output.results.length === 0) {
+                videoFrame = `<h5 class="text-info ">ТРЕЙЛЕРЫ НЕ НАЙДЕНЫ</h5>`;
+            }
             output.results.forEach((item) => {
-                
+                videoFrame += `<iframe width="560" height="315" src="https://www.youtube.com/embed/${item.key}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
             });
-            youtube.innerHTML = 'yes';
+            youtube.innerHTML = videoFrame;
         })
         .catch((reason) => {
             youtube.innerHTML = 'ПО ВАШЕМУ ЗАПРОСУ ВИДЕО НЕ НАЙДЕНО';
